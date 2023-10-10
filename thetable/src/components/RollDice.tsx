@@ -11,8 +11,14 @@ import React from "react";
 import PlayersContext from "../context/PlayersContext.tsx";
 
 export default function DialogRollDice() {
-  const { toggleModalDice, openModalDice, diceNumber } =
-    useContext(PlayersContext);
+  const {
+    toggleModalDice,
+    openModalDice,
+    diceNumber,
+    table,
+    currentPlayer,
+    game,
+  } = useContext(PlayersContext);
 
   return (
     <>
@@ -32,7 +38,9 @@ export default function DialogRollDice() {
             fontStyle: "Helvetica",
           }}
         >
-          You Did:
+          <Typography style={{ paddingBottom: 10 }}>
+            {`You Did: ${diceNumber}`}{" "}
+          </Typography>{" "}
         </DialogTitle>
         <DialogContent
           style={{
@@ -42,7 +50,9 @@ export default function DialogRollDice() {
             alignItems: "center",
           }}
         >
-          <Typography style={{ paddingBottom: 10 }}>{diceNumber} </Typography>{" "}
+          <Typography style={{ paddingBottom: 10 }}>
+            {`You have to: ${table.get(game.get(currentPlayer) ?? 0)}`}{" "}
+          </Typography>{" "}
         </DialogContent>
         <DialogActions style={{ justifyContent: "space-between" }}>
           <Button

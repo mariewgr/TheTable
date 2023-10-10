@@ -39,17 +39,24 @@ const Player = () => {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          alignItems: "flex-start",
+          justifyContent: "flex-start",
           flexDirection: "column",
+          margin: 10,
+          gap: 10,
         }}
       >
-        {Object.values(players).map((p, i) => (
-          <PlayerProgress
-            name={players.get(parseInt(p)) ?? ""}
-            progress={game.get(parseInt(p)) ?? 0}
-          />
-        ))}
+        {Array.from(players.keys()).map(
+          (
+            p // a aligner
+          ) => (
+            <PlayerProgress
+              key={p}
+              name={players.get(p) ?? ""}
+              progress={game.get(p) ?? 0}
+            />
+          )
+        )}
       </div>
       <h2
         style={{ display: "flex", justifyContent: "center" }}

@@ -12,6 +12,52 @@ type Players = Map<number, string>;
 
 type Game = Map<number, number>;
 
+type Table = Map<number, string>;
+
+const initTable = new Map<number, string>();
+initTable.set(1, "Start");
+initTable.set(2, "1 Shot");
+initTable.set(3, "2 Shots for the one with glasses");
+initTable.set(4, "everyone drinks");
+initTable.set(5, "Waterfall");
+initTable.set(6, "choose a drinkbody");
+initTable.set(7, "1 shot for the one left");
+initTable.set(8, "1 shot for the one right");
+initTable.set(9, "truth or dare");
+initTable.set(10, "go back to case 4");
+initTable.set(11, "rime tour(find a word that rime with the previous one)");
+initTable.set(12, "never I have ever");
+initTable.set(13, "categories");
+initTable.set(14, "make a rule");
+initTable.set(15, "push ups(distribute how much slips you dis push ups");
+initTable.set(16, "everyone drinks");
+initTable.set(17, "1 shot");
+initTable.set(18, "2 shots");
+initTable.set(19, "go back to case 10");
+initTable.set(20, "finish your drink");
+initTable.set(21, "everyone with brown hair drinks");
+initTable.set(22, "waterfall");
+initTable.set(23, "truth or dare");
+initTable.set(24, "everyone drinks");
+initTable.set(25, "never I have ever");
+initTable.set(26, "categories");
+initTable.set(27, "everyone with blue eyes drinks");
+initTable.set(28, "1 shot");
+initTable.set(29, "give 5 sips");
+initTable.set(30, "go back to case 20");
+initTable.set(31, "finish your drink");
+initTable.set(32, "everyone single drinks");
+initTable.set(33, "waterfall");
+initTable.set(34, "truth or dare");
+initTable.set(35, "everyone drinks");
+initTable.set(36, "never I have ever");
+initTable.set(37, "categories");
+initTable.set(38, "2 shots");
+initTable.set(39, "give 5 sips");
+initTable.set(40, "go back to case 30");
+initTable.set(41, "finish your drink");
+initTable.set(42, "finish");
+
 type Actions = {
   setPlayers: (players: Players) => void;
   updatePlayers: (id: number, name: string) => void;
@@ -53,6 +99,7 @@ export type State = {
   openModalDice: boolean;
   currentPlayer: number;
   diceNumber: number;
+  table: Table;
   //   openCreateModal: boolean;
   //   openDeleteModal: boolean;
   //   openUpdateModal: boolean;
@@ -75,6 +122,7 @@ export const config: StoreConfig<State, Actions> = {
     openModalDice: false,
     currentPlayer: 0,
     diceNumber: 0,
+    table: initTable,
     // openCreateModal: false,
     // openDeleteModal: false,
     // openUpdateModal: false,
@@ -95,7 +143,8 @@ export const config: StoreConfig<State, Actions> = {
       return { players: s.players };
     },
     updtateGame: ({ s, args: [playerId, place] }) => {
-      s.game.set(playerId, place);
+      const currentScore = s.game.get(playerId) ?? 0;
+      s.game.set(playerId, place + currentScore);
       return { game: s.game };
     },
     toggleModalDice: setArgIn("openModalDice"),
