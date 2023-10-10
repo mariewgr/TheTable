@@ -5,16 +5,21 @@ import {
   ErrorMap,
 } from "state-decorator";
 
-import { createContext } from "react";
+import React, { createContext } from "react";
 import { setArgIn } from "state-decorator/helpers";
 
-export type Player = {
-  id: string;
-  name: string;
-};
+type Players = Map<number, string>;
+
+type Game = Map<number, number>;
 
 type Actions = {
-  setPlayers: (Players: Player[]) => void;
+  setPlayers: (players: Players) => void;
+  updatePlayers: (id: number, name: string) => void;
+  setGame: (game: Game) => void;
+  updtateGame: (playerId: number, place: number) => void;
+  toggleModalDice: (openModalDice: boolean) => void;
+  nextPlayer: () => void;
+  setDiceNumber: (diceNumber: number) => void;
   //   setOpenCreateModal: (openCreateModal: boolean) => void;
   //   setOpenUpdateModal: (openUpdateModal: boolean) => void;
   //   setOpenUpdateImageModal: (openUpdateModal: boolean) => void;
@@ -43,7 +48,11 @@ type Actions = {
 export type PlayersListActions = Actions;
 
 export type State = {
-  Players: Player[];
+  players: Players;
+  game: Game;
+  openModalDice: boolean;
+  currentPlayer: number;
+  diceNumber: number;
   //   openCreateModal: boolean;
   //   openDeleteModal: boolean;
   //   openUpdateModal: boolean;
@@ -61,7 +70,11 @@ export type PlayersState = State;
 // Initial state & actions
 export const config: StoreConfig<State, Actions> = {
   getInitialState: () => ({
-    Players: [],
+    players: new Map<number, string>(),
+    game: new Map<number, number>(),
+    openModalDice: false,
+    currentPlayer: 0,
+    diceNumber: 0,
     // openCreateModal: false,
     // openDeleteModal: false,
     // openUpdateModal: false,
@@ -75,7 +88,25 @@ export const config: StoreConfig<State, Actions> = {
   }),
 
   actions: {
-    setPlayers: setArgIn("Players"), //({ args: [Players] }) => ({ Players }),
+    setPlayers: setArgIn("players"), //({ args: [Players] }) => ({ Players }),
+    setGame: setArgIn("game"),
+    updatePlayers: ({ s, args: [id, name] }) => {
+      s.players.set(id, name);
+      return { players: s.players };
+    },
+    updtateGame: ({ s, args: [playerId, place] }) => {
+      s.game.set(playerId, place);
+      return { game: s.game };
+    },
+    toggleModalDice: setArgIn("openModalDice"),
+    nextPlayer: ({ s }) => {
+      if (s.players.size === 0) {
+        return { currentPlayer: 0 };
+      }
+      const newPlayer = (s.currentPlayer + 1) % s.players.size;
+      return { currentPlayer: newPlayer };
+    },
+    setDiceNumber: setArgIn("diceNumber"),
     //     setOpenDeleteSuccess: setArgIn("openDeleteSuccess"),
     //     setOpenUpdateSuccess: setArgIn("openUpdateSuccess"),
     //     setOpenUpdateImageSuccess: setArgIn("openUpdateImageSuccess"),
@@ -162,7 +193,7 @@ type PlayersContextProps = State &
     errorMap: ErrorMap<Actions>;
   };
 
-export const PlayersContext = createContext<PlayersContextProps>(null);
+export const PlayersContext = createContext<PlayersContextProps>(null as any);
 
 export function PlayersContextProvider(p: { children: JSX.Element }) {
   const { state: s, actions: a, loadingMap, errorMap } = useLocalStore(config);
