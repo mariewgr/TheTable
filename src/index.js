@@ -30,11 +30,3 @@ root.render(
     </PlayersContextProvider>
   </React.StrictMode>
 );
-
-// ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-//   <React.StrictMode>
-//     <PlayersContextProvider>
-//       <RouterProvider router={router} />
-//     </PlayersContextProvider>
-//   </React.StrictMode>
-// );
