@@ -33,8 +33,9 @@
     "state-decorator": "^7.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.2",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.22.5",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
@@ -55,10 +56,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react"
-  ],
+  "babel": {
+    "presets": ["@babel/preset-react"]
+  },
   "plugins": [
     "@babel/plugin-proposal-private-property-in-object"
   ],
