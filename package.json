@@ -1,0 +1,16 @@
+{
+    "name": "thetable",
+    "version": "1.0.0",
+    "description": "Mon site web sur GitHub Pages",
+    "scripts": {
+      "deploy": "gh-pages -d dist"
+    },
+    "devDependencies": {
+      "gh-pages": "^6.0.0"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/username/username.github.io.git"
+    }
+  }
+  
