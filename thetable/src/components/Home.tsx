@@ -19,6 +19,7 @@ const Home = () => {
         gap: 8,
         justifyContent: "center",
         alignItems: "center",
+        marginTop: 32,
       }}
     >
       {nInts(nbPlayers).map((_, i) => (
